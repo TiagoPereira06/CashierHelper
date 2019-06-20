@@ -22,7 +22,7 @@ title __VIEW's Class Diagram__\n
 
   pt.tpereira.cashierhelper.view.CharsView -up-|> android.view.View
   android.view.View.BaseSavedState -up-|> android.view.AbsSavedState
-  pt.tpereira.cashierhelper.view.ProductsView -up-|> android.view.View
+  pt.tpereira.cashierhelper.model.ProductsMapper -up-|> android.view.View
   android.view.View.BaseSavedState -up-|> android.view.AbsSavedState
 
 

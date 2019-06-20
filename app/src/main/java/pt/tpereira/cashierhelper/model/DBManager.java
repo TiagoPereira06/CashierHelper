@@ -4,20 +4,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 public class DBManager {
-    HashMap<String,LinkedList<Product>> db;
+    private HashMap<Character, LinkedList<Product>> map;
 
     public DBManager() {
-        db = new HashMap<>();
+        map = new HashMap<>();
     }
 
     public void initItems(InputStream file) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(file));
-        String line = null;
+        String line;
         while ((line = br.readLine()) !=null){
             add(line.split(" "));
         }
@@ -25,24 +27,27 @@ public class DBManager {
 
     private void add(String[] parts){
         String name = parts[0];
-        String key = String.valueOf(name.charAt(0));
+        Character key = name.charAt(0);
         Double price = Double.valueOf(parts[1]);
 
-        if(db.containsKey(key)){
-            db.get(key).add(new Product(price, name));
+        LinkedList<Product> products = map.get(key);
+        if (products != null) {
+            products.add(new Product(name, price));
         }else{
-            db.put(key,new LinkedList<Product>());
-            db.get(key).add(new Product(price,name));
+            products = new LinkedList<>();
+            map.put(key, products);
+            products.add(new Product(name, price));
         }
 
     }
 
-    public String[] getKeysArray() {
-        Set<String> keys = db.keySet();
-        return keys.toArray(new String[keys.size()]);
+    public Character[] getKeysArray() {
+        Set<Character> keys = map.keySet();
+        return keys.toArray(new Character[0]);
     }
 
-    public LinkedList<Product> get (String s){
-        return db.get(s);
+    public List<Product> get(Character c) {
+        List<Product> list = map.get(c);
+        return list == null ? Collections.<Product>emptyList() : list;
     }
 }

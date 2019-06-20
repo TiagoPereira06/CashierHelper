@@ -2,32 +2,36 @@ package pt.tpereira.cashierhelper.model;
 
 public class Product {
 
-    private double price;
-    private String name;
+    private final String name;
+    private final double unitPrice;
 
-    @Override
-    public String toString() {
-        return name + " -> " + price+"€";
-    }
-
-    public Product(double price, String name) {
-        this.price = price;
+    public Product(String name, double unitPrice) {
         this.name = name;
+        this.unitPrice = unitPrice;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    double getUnitPrice() {
+        return unitPrice;
+    }
+
+    @Override
+    public String toString() {
+        return name + " ( " + unitPrice + "€ ) ";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Product other = (Product) obj;
+        return name.equals(other.name);
     }
 }

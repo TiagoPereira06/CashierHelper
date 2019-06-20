@@ -49,7 +49,7 @@ title __APP's Class Diagram__\n
   pt.tpereira.cashierhelper.CashierController -up-|> android.support.v7.app.AppCompatActivity
   pt.tpereira.cashierhelper.CashierController o-- pt.tpereira.cashierhelper.model.DBManager : dataBase
   pt.tpereira.cashierhelper.view.CharsView -up-|> android.view.View
-  pt.tpereira.cashierhelper.view.ProductsView -up-|> android.view.View
+  pt.tpereira.cashierhelper.model.ProductsMapper -up-|> android.view.View
 
 
 right footer
