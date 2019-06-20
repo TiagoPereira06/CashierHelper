@@ -66,7 +66,7 @@ public class ProductsMapper {
     }
 
     public String getTotalPrice() {
-        return df.format(totalValue);
+        return df.format(totalValue) + "€";
     }
 }
 
