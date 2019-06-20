@@ -7,24 +7,24 @@
 
     <Button
         android:id="@+id/delLastProductButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_width="70dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
         android:text="DEL LAST"
         android:textSize="10sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/endSessionButton"
-        app:layout_constraintEnd_toStartOf="@+id/scrollViewKeys"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/listOfProducts"
         app:layout_constraintTop_toBottomOf="@+id/newUserButton" />
 
     <Button
         android:id="@+id/newUserButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="70dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="NEW"
         android:textSize="10sp"
         android:textStyle="bold"
@@ -37,18 +37,17 @@
 
     <LinearLayout
         android:id="@+id/valueLine"
-        android:layout_width="275dp"
-        android:layout_height="27dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="7dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/scrollViewProducts"
         app:layout_constraintEnd_toStartOf="@+id/scrollViewKeys"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listOfProducts"
-        app:layout_constraintVertical_bias="0.6">
+        app:layout_constraintTop_toBottomOf="@+id/listOfProducts">
 
         <TextView
             android:id="@+id/totalValue"
@@ -63,7 +62,7 @@
 
         <TextView
             android:id="@+id/costView"
-            android:layout_width="87dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_weight="1"
@@ -76,48 +75,47 @@
 
     <Button
         android:id="@+id/endSessionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_width="70dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
         android:text="END"
         android:textSize="10sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/scrollViewKeys"
-        app:layout_constraintEnd_toStartOf="@+id/scrollViewKeys"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/listOfProducts"
         app:layout_constraintTop_toBottomOf="@+id/delLastProductButton" />
 
     <TextView
         android:id="@+id/listOfProducts"
-        android:layout_width="286dp"
-        android:layout_height="163dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="277dp"
+        android:layout_height="140dp"
 
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:isScrollContainer="true"
         android:nestedScrollingEnabled="false"
         android:orientation="vertical"
         android:scrollbars="vertical"
         android:textColor="#000000"
         android:typeface="monospace"
-        app:layout_constraintBottom_toTopOf="@+id/scrollViewKeys"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.262" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:id="@+id/scrollViewKeys"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="81dp"
+        android:layout_height="479dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/listOfProducts"
-        app:layout_constraintTop_toBottomOf="@id/endSessionButton"
-        app:layout_constraintVertical_bias="0.958">
+        app:layout_constraintStart_toEndOf="@+id/scrollViewProducts"
+        app:layout_constraintTop_toBottomOf="@+id/listOfProducts">
 
         <TableLayout
             android:id="@+id/charViewLayout"
@@ -128,11 +126,11 @@
 
     <ScrollView
         android:id="@+id/scrollViewProducts"
-        android:layout_width="269dp"
-        android:layout_height="444dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="251dp"
+        android:layout_height="409dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/scrollViewKeys"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/valueLine">
 
