@@ -91,7 +91,7 @@ public class CashierController extends AppCompatActivity implements TotalValueDi
     }
 
     private void startCheckBoxesActivity() {
-        Intent intent = new Intent(this, Checkboxes.class);
+        Intent intent = new Intent(this, CheckBoxesActivity.class);
         intent.putExtra("ProductsMapper", productsMapper);
         startActivity(intent);
     }

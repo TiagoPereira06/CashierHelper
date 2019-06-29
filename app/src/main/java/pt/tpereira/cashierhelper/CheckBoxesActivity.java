@@ -16,7 +16,7 @@ import java.util.List;
 import pt.tpereira.cashierhelper.model.ProductBucket;
 import pt.tpereira.cashierhelper.model.ProductsMapper;
 
-public class Checkboxes extends AppCompatActivity {
+public class CheckBoxesActivity extends AppCompatActivity {
 
     private ProductsMapper productsMapper;
     private List<ProductBucket> purchaseProductsList;

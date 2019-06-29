@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/newiconloja_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".Checkboxes"></activity>
+        <activity android:name=".CheckBoxesActivity"></activity>
         <activity android:name=".CashierController">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
