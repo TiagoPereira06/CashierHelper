@@ -1,15 +1,15 @@
 package pt.tpereira.cashierhelper.model;
 
 import android.annotation.SuppressLint;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ProductsMapper {
+public class ProductsMapper implements Parcelable {
 
-    private static final String format = "%-2d %-15s %-5s€ %-5s€%n";
-    private static final DecimalFormat df = new DecimalFormat("#0.00");
     private LinkedList<Product> productsByOrder;
     private List<ProductBucket> productBuckets;
     private double totalValue;
@@ -30,6 +30,19 @@ public class ProductsMapper {
         productBuckets.add(new ProductBucket(product));
     }
 
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<ProductsMapper> CREATOR = new Parcelable.Creator<ProductsMapper>() {
+        @Override
+        public ProductsMapper createFromParcel(Parcel in) {
+            return new ProductsMapper(in);
+        }
+
+        @Override
+        public ProductsMapper[] newArray(int size) {
+            return new ProductsMapper[size];
+        }
+    };
+
     public void removeLast() {
         if (productsByOrder.isEmpty()) return;
         Product p = productsByOrder.removeLast();
@@ -48,25 +61,67 @@ public class ProductsMapper {
         totalValue = 0;
     }
 
+    protected ProductsMapper(Parcel in) {
+        if (in.readByte() == 0x01) {
+            productsByOrder = new LinkedList<Product>();
+            in.readList(productsByOrder, Product.class.getClassLoader());
+        } else {
+            productsByOrder = null;
+        }
+        if (in.readByte() == 0x01) {
+            productBuckets = new ArrayList<ProductBucket>();
+            in.readList(productBuckets, ProductBucket.class.getClassLoader());
+        } else {
+            productBuckets = null;
+        }
+        totalValue = in.readDouble();
+    }
+
+    public void addProduct(Product product, int units) {
+        productsByOrder.add(product);
+        productBuckets.add(new ProductBucket(product, units));
+    }
+
     @SuppressLint("DefaultLocale")
     public String getViewString() {
-        int units;
-        double unitPrice, total, totalSum = 0;
+        double totalSum = 0;
         StringBuilder res = new StringBuilder();
         for (ProductBucket pb : productBuckets) {
-            Product p = pb.getProduct();
-            units = pb.getUnits();
-            unitPrice = p.getUnitPrice();
-            total = units * unitPrice;
-            res.append(String.format(format, units, p.getName(), df.format(unitPrice), df.format(total)));
-            totalSum += total;
+            res.append(pb);
+            totalSum += pb.totalPrice();
         }
         this.totalValue = totalSum;
         return res.toString();
     }
 
-    public String getTotalPrice() {
-        return df.format(totalValue) + "€";
+    public Double getTotalPrice() {
+        //return (DBManager.format(totalValue));
+        return totalValue;
+    }
+
+    public List<ProductBucket> getPurchasedProducts() {
+        return productBuckets;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (productsByOrder == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(productsByOrder);
+        }
+        if (productBuckets == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(productBuckets);
+        }
+        dest.writeDouble(totalValue);
     }
 }
-

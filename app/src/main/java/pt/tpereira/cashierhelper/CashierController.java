@@ -1,5 +1,7 @@
 package pt.tpereira.cashierhelper;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -20,13 +22,14 @@ import pt.tpereira.cashierhelper.model.Product;
 import pt.tpereira.cashierhelper.model.ProductsMapper;
 
 
-public class CashierController extends AppCompatActivity {
+public class CashierController extends AppCompatActivity implements TotalValueDialog.TotalValueDialogListener {
     private ConstraintLayout rootPanel;
     private DBManager dataBase = new DBManager();
     private ProductsMapper productsMapper;
     private TextView listProducts, finalValue;
-    private Button newClientButton, delLastProduct, endSessionButton;
+    private Button newClientButton, delLastProduct, endSessionButton, addTotalValueButton;
     private TableLayout keysView, allProductsView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +49,7 @@ public class CashierController extends AppCompatActivity {
         newClientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listProducts.setText(null);
-                finalValue.setText(null);
-                productsMapper.clear();
-                rootPanel.invalidate();
+                newSessionRoutine();
 
             }
         });
@@ -64,17 +64,42 @@ public class CashierController extends AppCompatActivity {
         });
 
         endSessionButton = findViewById(R.id.endSessionButton);
+        endSessionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startCheckBoxesActivity();
+            }
+        });
         keysView = findViewById(R.id.charViewLayout);
         allProductsView = findViewById(R.id.productsViewLayout);
         finalValue = findViewById(R.id.costView);
+        addTotalValueButton = findViewById(R.id.addFreeButton);
+        addTotalValueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
 
         productsMapper = new ProductsMapper();
         initKeysView();
     }
 
+    private void openDialog() {
+        TotalValueDialog totalValueDialog = new TotalValueDialog();
+        totalValueDialog.show(getSupportFragmentManager(), "TotalValue Dialog");
+    }
+
+    private void startCheckBoxesActivity() {
+        Intent intent = new Intent(this, Checkboxes.class);
+        intent.putExtra("ProductsMapper", productsMapper);
+        startActivity(intent);
+    }
+
     private void updatePurchaseList() {
         listProducts.setText(productsMapper.getViewString());
-        finalValue.setText(productsMapper.getTotalPrice());
+        finalValue.setText(DBManager.format(productsMapper.getTotalPrice()));
+
     }
 
     private void showProducts(Character letter) {
@@ -112,6 +137,7 @@ public class CashierController extends AppCompatActivity {
             row.setOrientation(LinearLayout.HORIZONTAL);
 
             keyButton.setText(keysArray[i].toString());
+            keyButton.setTextColor(Color.parseColor("#E91E63"));
             keyButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -125,4 +151,22 @@ public class CashierController extends AppCompatActivity {
         keysView.invalidate();
     }
 
+    private void newSessionRoutine() {
+        listProducts.setText(null);
+        finalValue.setText(null);
+        productsMapper.clear();
+        rootPanel.invalidate();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void applyValue(String name, String price, String units) {
+        productsMapper.addProduct(new Product(name, Double.valueOf(price)), Integer.valueOf(units));
+        updatePurchaseList();
+
+    }
 }
