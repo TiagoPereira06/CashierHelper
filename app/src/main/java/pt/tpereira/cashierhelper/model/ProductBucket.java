@@ -19,22 +19,17 @@ public class ProductBucket implements Parcelable {
         }
     };
     private final Product product;
-    private static final String format = "%-2d %-15s %-6s %-6s%n";
+    private static final String format = "%-3d %-15s %-6s %-6s%n";
 
     private int units;
-
-    ProductBucket(Product product) {
-        this.product = product;
-        units = 1;
-    }
 
     ProductBucket(Product product, int units) {
         this.product = product;
         this.units = units;
     }
 
-    void increment() {
-        ++units;
+    void addUnits(int units) {
+        this.units += units;
     }
 
     void decrement() {

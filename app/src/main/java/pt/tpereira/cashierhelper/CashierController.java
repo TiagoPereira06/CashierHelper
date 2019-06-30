@@ -73,6 +73,7 @@ public class CashierController extends AppCompatActivity implements TotalValueDi
         keysView = findViewById(R.id.charViewLayout);
         allProductsView = findViewById(R.id.productsViewLayout);
         finalValue = findViewById(R.id.costView);
+        finalValue.setText("0.00€");
         addTotalValueButton = findViewById(R.id.addFreeButton);
         addTotalValueButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,9 +152,9 @@ public class CashierController extends AppCompatActivity implements TotalValueDi
         keysView.invalidate();
     }
 
-    private void newSessionRoutine() {
+    public void newSessionRoutine() {
         listProducts.setText(null);
-        finalValue.setText(null);
+        finalValue.setText("0.00€");
         productsMapper.clear();
         rootPanel.invalidate();
     }

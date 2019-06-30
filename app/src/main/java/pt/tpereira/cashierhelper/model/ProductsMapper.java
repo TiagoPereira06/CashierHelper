@@ -20,14 +20,19 @@ public class ProductsMapper implements Parcelable {
     }
 
     public void addProduct(Product product) {
-        productsByOrder.add(product);
+        addProduct(product, 1);
+    }
+
+    public void addProduct(Product product, int quantity) {
+        for (int i = 0; i < quantity; i++)
+            productsByOrder.add(product);
         for (ProductBucket pb : productBuckets) {
             if (pb.getProduct().equals(product)) {
-                pb.increment();
+                pb.addUnits(quantity);
                 return;
             }
         }
-        productBuckets.add(new ProductBucket(product));
+        productBuckets.add(new ProductBucket(product, quantity));
     }
 
     @SuppressWarnings("unused")
@@ -77,11 +82,6 @@ public class ProductsMapper implements Parcelable {
         totalValue = in.readDouble();
     }
 
-    public void addProduct(Product product, int units) {
-        productsByOrder.add(product);
-        productBuckets.add(new ProductBucket(product, units));
-    }
-
     @SuppressLint("DefaultLocale")
     public String getViewString() {
         double totalSum = 0;
@@ -95,7 +95,6 @@ public class ProductsMapper implements Parcelable {
     }
 
     public Double getTotalPrice() {
-        //return (DBManager.format(totalValue));
         return totalValue;
     }
 

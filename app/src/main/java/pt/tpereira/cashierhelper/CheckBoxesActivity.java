@@ -24,15 +24,15 @@ public class CheckBoxesActivity extends AppCompatActivity {
     private ConstraintLayout rootPanel;
     private ScrollView checkBoxesScroll;
     private TableLayout checkBoxesTable;
-    private Button resetButton;
+    private Button finishButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkboxes);
         checkBoxesTable = findViewById(R.id.checkBoxesTable);
-        resetButton = findViewById(R.id.resetButtom);
-        resetButton.setOnClickListener(new View.OnClickListener() {
+        finishButton = findViewById(R.id.resetButtom);
+        finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -56,7 +56,7 @@ public class CheckBoxesActivity extends AppCompatActivity {
                     if (((CheckBox) v).isChecked()) {
                         globalCounter++;
                         if (globalCounter == purchaseProductsList.size())
-                            resetButton.setVisibility(View.VISIBLE);
+                            finishButton.setVisibility(View.VISIBLE);
                     } else globalCounter--;
 
                 }
